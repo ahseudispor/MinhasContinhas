@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Controle Financeiro ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-icon">🌸<img src="c3318c137ac905ae698facd550d922b1.jpg" alt="" srcset="" width="200px" height="200px">💰</div>
+            <h1>Minhas Finanças</h1>
+            <p class="subtitle">Gerenciando meu dinheirinho de guê 💕</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="stat-card receitas">
+                <span class="stat-icon">💚</span>
+                <div class="stat-label">Receitas</div>
+                <div class="stat-value" id="totalReceitas">R$ 0,00</div>
+                <div class="stat-change">Este mês</div>
+            </div>
+            <div class="stat-card despesas">
+                <span class="stat-icon">💔</span>
+                <div class="stat-label">Despesas</div>
+                <div class="stat-value" id="totalDespesas">R$ 0,00</div>
+                <div class="stat-change">Este mês</div>
+            </div>
+            <div class="stat-card saldo">
+                <span class="stat-icon">✨</span>
+                <div class="stat-label">Saldo</div>
+                <div class="stat-value" id="saldo">R$ 0,00</div>
+                <div class="stat-change" id="saldoTexto">Em equilíbrio</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Nova Transação</h2>
+                </div>
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label for="descricao">📝 Descrição</label>
+                        <input type="text" id="descricao" placeholder="Ex: Salário, Supermercado..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">💵 Valor</label>
+                        <input type="number" id="valor" step="0.01" placeholder="0,00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria">🏷️ Categoria</label>
+                        <select id="categoria" required>
+                            <option value="">Selecione...</option>
+                            <optgroup label="✨ Receitas">
+                                <option value="Salário">💼 Salário</option>
+                                <option value="Freelance">💻 Freelance</option>
+                                <option value="Investimentos">📈 Investimentos</option>
+                                <option value="Outros - Receita">🌟 Outros</option>
+                            </optgroup>
+                            <optgroup label="💔 Despesas">
+                                <option value="Alimentação">🍜 Alimentação</option>
+                                <option value="Moradia">🏠 Moradia</option>
+                                <option value="Transporte">🚗 Transporte</option>
+                                <option value="Saúde">💊 Saúde</option>
+                                <option value="Lazer">🎮 Lazer</option>
+                                <option value="Educação">📚 Educação</option>
+                                <option value="Contas">💡 Contas</option>
+                                <option value="Outros - Despesa">🌸 Outros</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="data">📅 Data</label>
+                        <input type="date" id="data" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="observacoes">💭 Observações (opcional)</label>
+                        <textarea id="observacoes" rows="2" placeholder="Adicione detalhes..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn-receita" data-tipo="receita">✨ Receita</button>
+                        <button type="submit" class="btn-despesa" data-tipo="despesa">💔 Despesa</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Gastos por Categoria</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Histórico</h2>
+            </div>
+            <div class="transactions" id="transactionsList">
+                <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <p>Nenhuma transação ainda! ✨<br>Comece adicionando sua primeira entrada acima 💕</p>
+                </div>
+            </div>
+            <div class="import-export-grid">
+                <button class="btn-export" onclick="exportToExcel()">📥 Exportar Excel</button>
+                <label for="importFile" class="btn-export btn-import">
+                    📤 Importar Excel
+                    <input type="file" id="importFile" accept=".xlsx" style="display: none;" onchange="importFromExcel(event)">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
